@@ -1,24 +1,23 @@
 pipeline {
     agent any
 
-    environment {
-        // Define the branch you want to build and deploy
-        BUILD_BRANCH = 'main'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                // Check out the code from the specified branch
-                checkout([$class: 'GitSCM', branches: [[name: "refs/heads/${BUILD_BRANCH}"]], userRemoteConfigs: [[url: scm.url]]])
+                // Check out the code from the repository
+                checkout scm
             }
         }
 
         stage('Build and Deploy') {
             steps {
                 // Assuming your website is static content (HTML, CSS, JS)
-                // You can copy the files to a web server directory or use a tool like rsync
-                sh 'rsync -avz --delete ./path/to/your/website/* /var/www/html/'
+                // Copy the files to a web server directory
+                script {
+                    echo 'Copying files to the web server directory'
+                    // Example: Copy all files to /var/www/html/
+                    sh 'cp -r * /var/www/html/'
+                }
             }
         }
     }
