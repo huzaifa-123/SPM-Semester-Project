@@ -4,22 +4,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Check out the code from the repository
                 script {
-                    checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: '*/main']],  // Replace 'main' with your branch name
-                        userRemoteConfigs: [[url: 'https://github.com/huzaifa-123/SPM-Semester-Project.git']]
-                    ])
+                    // Check out the code from the repository
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/huzaifa-123/SPM-Semester-Project.git']]])
                 }
             }
         }
 
         stage('Build and Deploy') {
             steps {
-                // Assuming your website is static content (HTML, CSS, JS)
-                // Copy the files to a web server directory
                 script {
+                    // Assuming your website is static content (HTML, CSS, JS)
+                    // Copy the files to a web server directory
                     echo 'Copying files to the web server directory'
                     // Example: Copy all files to /var/www/html/
                     sh 'cp -r * /var/www/html/'
