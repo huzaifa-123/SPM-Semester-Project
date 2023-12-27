@@ -12,16 +12,22 @@ pipeline {
         }
 
         stage('Build and Deploy') {
-            steps {
-                script {
-                    // Assuming your website is static content (HTML, CSS, JS)
-                    // Copy the files to a web server directory
-                    echo 'Copying files to the web server directory'
-                    // Example: Copy all files to /var/www/html/
-                    sh 'cp -r * /var/www/html/'
-                }
+    steps {
+        script {
+            // Assuming your website is static content (HTML, CSS, JS)
+            // Copy the files to a web server directory
+            echo 'Copying files to the web server directory'
+            
+            // Use 'copy' command on Windows, and 'cp' on Unix-like systems
+            if (isUnix()) {
+                sh 'cp -r * /var/www/html/'
+            } else {
+                bat 'copy * C:\\path\\to\\your\\web\\server\\directory\\'
             }
         }
+    }
+}
+
     }
 
     post {
