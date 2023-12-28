@@ -1,4 +1,17 @@
-stage('Build and Deploy') {
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Check out the code from the repository
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/huzaifa-123/SPM-Semester-Project.git']]])
+                }
+            }
+        }
+
+       stage('Build and Deploy') {
     steps {
         script {
             // Assuming your website is static content (HTML, CSS, JS)
@@ -15,6 +28,15 @@ stage('Build and Deploy') {
                 // Use 'copy' command on Windows, adjust the path as needed
                 bat 'copy * C:\\path\\to\\your\\web\\server\\directory\\'
             }
+        }
+    }
+}
+
+
+    post {
+        always {
+            // Clean up or perform any other actions after the pipeline
+            echo 'CI Pipeline completed!'
         }
     }
 }
