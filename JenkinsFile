@@ -25,8 +25,9 @@ pipeline {
             if (isUnix()) {
                 sh 'cp -r * /var/www/html/'
             } else {
+                
                 // Use 'copy' command on Windows, adjust the path as needed
-                bat 'copy * C:\\path\\to\\your\\web\\server\\directory\\'
+                bat 'copy * D:\\Semester 7\\SPM Semester Project\\'
             }
         }
     }
