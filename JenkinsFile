@@ -11,28 +11,27 @@ pipeline {
             }
         }
 
-       stage('Build and Deploy') {
-    steps {
-        script {
-            // Assuming your website is static content (HTML, CSS, JS)
-            // Copy the files to a web server directory
-            echo 'Copying files to the web server directory'
+        stage('Build and Deploy') {
+            steps {
+                script {
+                    // Assuming your website is static content (HTML, CSS, JS)
+                    // Copy the files to a web server directory
+                    echo 'Copying files to the web server directory'
 
-            // Print the current directory for debugging
-            sh 'pwd'
+                    // Print the current directory for debugging
+                    sh 'pwd'
 
-            // Use 'copy' command on Windows, and 'cp' on Unix-like systems
-            if (isUnix()) {
-                sh 'cp -r * /var/www/html/'
-            } else {
-                
-                // Use 'copy' command on Windows, adjust the path as needed
-                bat 'copy * D:\\Semester 7\\SPM Semester Project\\'
+                    // Use 'cp' on Unix-like systems
+                    if (isUnix()) {
+                        sh 'cp -r * /var/www/html/'
+                    } else {
+                        // Use 'copy' command on Windows, specify file names
+                        bat 'copy *.html *.css *.js D:\\Semester 7\\SPM Semester Project\\'
+                    }
+                }
             }
         }
     }
-}
-
 
     post {
         always {
