@@ -19,11 +19,11 @@ pipeline {
         }
         
     }
-    post 
-    {
-        always
-        {
-            error 'Pipeline Status'
+    post {
+    always {
+        // Clean up or perform any other actions after the pipeline
+        catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+            echo 'CI Pipeline completed!'
         }
     }
 }
