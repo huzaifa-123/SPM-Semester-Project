@@ -2,41 +2,28 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
-                script {
-                    // Check out the code from the repository
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], userRemoteConfigs: [[url: 'https://github.com/huzaifa-123/SPM-Semester-Project.git']]])
-                }
+                echo 'Building..'
             }
         }
-
-        stage('Build and Deploy') {
+        stage('Test') {
             steps {
-                script {
-                    // Assuming your website is static content (HTML, CSS, JS)
-                    // Copy the files to a web server directory
-                    echo 'Copying files to the web server directory'
-
-                    // Print the current directory for debugging
-                    sh 'pwd'
-
-                    // Use 'cp' on Unix-like systems
-                    if (isUnix()) {
-                        sh 'cp -r * /var/www/html/'
-                    } else {
-                        // Use 'copy' command on Windows, specify file names
-                        bat 'copy *.html *.css *.js D:\\Semester 7\\SPM Semester Project\\'
-                    }
-                }
+                echo 'Testing..'
             }
         }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+        
     }
-
-    post {
-        always {
-            // Clean up or perform any other actions after the pipeline
-            echo 'CI Pipeline completed!'
+    post 
+    {
+        always
+        {
+            emailtext body: 'Summary',subject:  'Pipeline Status', to: 'huzaifaahmed5022@gmail.com'
         }
     }
 }
