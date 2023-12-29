@@ -13,7 +13,7 @@
         <!-- Update these values based on your SonarQube server configuration -->
         <sonar.host.url>http://localhost:9000</sonar.host.url>
     </properties>
-
+    
     <build>
         <plugins>
             <plugin>
