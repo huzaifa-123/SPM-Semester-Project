@@ -23,21 +23,18 @@ pipeline {
                     // Define the Maven tool
                     def mvnHome = tool name: 'maven-3', type: 'maven'
                     // Run SonarQube analysis
-                    withSonarQubeEnv('sonar-6') {
-                        sh "${mvnHome}/bin/mvn sonar:sonar"
+                    withSonarQubeEnv('SonarQube') {
+                        bat "mvn sonar:sonar"
                     }
                 }
             }
         }
-        
     }
-    post 
-    {
-        always 
-        {
+
+    post {
+        always {
             // Clean up or perform any other actions after the pipeline
-            catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE')
-            {
+            catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                 echo 'CI Pipeline completed!'
             }
         }
