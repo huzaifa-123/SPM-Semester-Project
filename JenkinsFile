@@ -36,8 +36,9 @@ pipeline {
                 script {
                     // Define the Maven tool
                     def mvnHome = tool name: 'maven-3', type: 'maven'
-                    // Run SonarQube analysis
-                    sh "${mvnHome}/bin/mvn sonar:sonar -Dsonar.projectKey=spmproject -Dsonar.projectName=spmprojec"
+                    
+                    // Run SonarQube analysis using "bat" on Windows
+                    bat "${mvnHome}\\bin\\mvn sonar:sonar -Dsonar.projectKey=your-sonar-project-key -Dsonar.projectName=your-sonar-project-name"
                 }
             }
         }
