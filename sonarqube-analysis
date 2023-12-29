@@ -1,28 +1,72 @@
-node{
-    stage('SCM Checkout'){
-        git 'https://github.com/huzaifa-123/SPM-Semester-Project.git'
-    } 
-    stage('Compile-Package'){
-        def mvnHome = tool name: 'maven-3', type: 'maven' sh "${mvnHome}/bin/mvn package"
-    }  
-    stage('SonarQube Analysis') {
-        def mvnHome = tool name: 'maven-3', type: 'maven' withSonarQubeEnv('sonar-6') {
-            sh "${mvnHome}/bin/mvn sonar: sonar"
+pipeline {
+    agent any
+
+    stages {
+        stage('SCM Checkout') {
+            steps {
+                script {
+                    // Check out the code from the repository
+                    git 'https://github.com/huzaifa-123/SPM-Semester-Project.git'
+                }
+            }
+        }
+
+        stage('Compile-Package') {
+            steps {
+                script {
+                    // Define the Maven tool
+                    def mvnHome = tool name: 'maven-3', type: 'maven'
+                    // Run Maven package
+                    sh "${mvnHome}/bin/mvn package"
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Define the Maven tool
+                    def mvnHome = tool name: 'maven-3', type: 'maven'
+                    // Run SonarQube analysis
+                    withSonarQubeEnv('sonar-6') {
+                        sh "${mvnHome}/bin/mvn sonar:sonar"
+                    }
+                }
+            }
+        }
+
+        stage('Email Notification') {
+            steps {
+                script {
+                    // Send email notification
+                    emailext body: '''Hi Welcome to Jenkins email alerts
+                        Thanks
+                        Hari''',
+                        subject: 'Jenkins Job',
+                        to: 'hari.kammana@gmail.com'
+                }
+            }
+        }
+
+        stage('Slack Notification') {
+            steps {
+                script {
+                    // Send Slack notification
+                    slackSend(baseUrl: 'https://hooks.slack.com/services/',
+                        channel: '#jenkins-pipeline-demo',
+                        color: 'good',
+                        message: 'Welcome to Jenkins, Slack!',
+                        teamDomain: 'javahomecloud',
+                        tokenCredentialId: 'slack-demo')
+                }
+            }
         }
     }
-    stage('Email Notification') {
-        mail bcc: '', body: '''Hi Welcome to jenkins email alerts
-        Thanks
-        Hari''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'hari.kammana@gmail.com' 
-    }
-    stage('Slack Notification') {
-        slackSend baseUrl: 'https://hooks.slack.com/services/',
-        channel: '#jenkins-pipeline-demo',
-        color: 'good',
-        message: 'Welcome to Jenkins, Slack!',
-        teamDomain: 'javahomecloud',
-        tokenCredentialId: 'slack-demo' 
-    }
 
+    post {
+        always {
+            // Clean up or perform any other actions after the pipeline
+            echo 'CI Pipeline completed!'
+        }
+    }
 }
-
