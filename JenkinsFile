@@ -35,7 +35,7 @@ pipeline {
                 script {
                     def scannerHome = tool 'sonar-6'
                     withSonarQubeEnv('sonar-6') {
-                         bat "mvn sonar:sonar -X -Dsonar.host.url=http://localhost:9000 -Dsonar.projectKey=spmproject -Dsonar.projectName='spmproject' -Dsonar.login=sqp_06b333639bfbf6d6a2c63c40d97e56b115db04a7"
+                         bat "C:\\path\\to\\mvn.cmd sonar:sonar -X -Dsonar.host.url=http://localhost:9000 -Dsonar.projectKey=spmproject -Dsonar.projectName='spmproject' -Dsonar.login=sqp_06b333639bfbf6d6a2c63c40d97e56b115db04a7"
                     }
                 }
             }
