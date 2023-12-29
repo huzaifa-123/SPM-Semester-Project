@@ -38,10 +38,16 @@ pipeline {
                     def mvnHome = tool name: 'maven-3', type: 'maven'
                     
                     // Run SonarQube analysis using "bat" on Windows
-                    bat "${mvnHome}\\bin\\mvn sonar:sonar -Dsonar.projectKey=your-sonar-project-key -Dsonar.projectName=your-sonar-project-name"
+                    bat """
+                        ${mvnHome}\\bin\\mvn sonar:sonar 
+                        -Dsonar.projectKey=spmproject
+                        -Dsonar.projectName=spmproject
+                        -Dsonar.login=sqp_06b333639bfbf6d6a2c63c40d97e56b115db04a7
+                    """
                 }
             }
         }
+
         
         stage('Deploy') {
             steps {
