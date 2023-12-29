@@ -23,7 +23,7 @@ pipeline {
                     // Define the Maven tool
                     def mvnHome = tool name: 'maven-3', type: 'maven'
                     // Run SonarQube analysis
-                    withSonarQubeEnv('SonarQube') {
+                    withSonarQubeEnv('sonar-6') {
                         bat "mvn sonar:sonar"
                     }
                 }
