@@ -1,5 +1,16 @@
 pipeline {
     agent any
+    stages {
+        stage('SCM Checkout') {
+            steps {
+                script {
+                    // Configure Git and use credentials
+                   git 'https://github.com/huzaifa-123/SPM-Semester-Project.git'
+                }
+            }
+        }
+    }
+
     
     stages {
         stage('Build') {
@@ -31,13 +42,22 @@ pipeline {
         }
         
         stage('SonarQube Analysis') {
-            agent any
             steps {
-                withCredentials([string(credentialsId: 'sqp_06b333639bfbf6d6a2c63c40d97e56b115db04a7', variable: 'spm-project')]) {
-                    withSonarQubeEnv('sonar-6') {
-                        script {
-                            bat "mvn clean package sonar:sonar -Dsonar.login=%SONAR_TOKEN%"
-                        }
+                script {
+                    // Define the Maven tool
+                    def mvnHome = tool name: 'maven-3', type: 'maven'
+                    
+                    // Replace the SonarQube properties with your actual values
+                    def sonarProperties = [
+                        '-Dsonar.projectKey=spmproject',
+                        '-Dsonar.projectName=spmproject',
+                        '-Dsonar.host.url=http://localhost:9000',
+                        '-Dsonar.login=sqp_06b333639bfbf6d6a2c63c40d97e56b115db04a7'
+                    ].join(' ')
+
+                    // Run SonarQube analysis with updated properties
+                    withSonarQubeEnv('your-sonarqube-credentials-id') {
+                        bat "${mvnHome}/bin/mvn clean verify sonar:sonar ${sonarProperties}"
                     }
                 }
             }
