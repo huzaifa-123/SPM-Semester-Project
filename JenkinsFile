@@ -30,6 +30,18 @@ pipeline {
             }
         }
         
+        stage('SonarQube Analysis') {
+            agent any
+            steps {
+                withSonarQubeEnv('sonar-6') {
+                    bat 'mvn clean package sonar:sonar'
+                }
+            }
+        }
+
+        
+
+        
         stage('Deploy') {
             steps {
                 echo 'Deploying...'
