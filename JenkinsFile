@@ -33,11 +33,16 @@ pipeline {
         stage('SonarQube Analysis') {
             agent any
             steps {
-                withSonarQubeEnv('sonar-6') {
-                    bat 'mvn clean package sonar:sonar'
+                withCredentials([string(credentialsId: 'sqp_06b333639bfbf6d6a2c63c40d97e56b115db04a7', variable: 'spm-project')]) {
+                    withSonarQubeEnv('sonar-6') {
+                        script {
+                            bat "mvn clean package sonar:sonar -Dsonar.login=%SONAR_TOKEN%"
+                        }
+                    }
                 }
             }
         }
+
 
         
 
