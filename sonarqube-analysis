@@ -35,19 +35,6 @@ pipeline {
             }
         }
 
-        stage('Email Notification') {
-            steps {
-                script {
-                    // Send email notification
-                    emailext body: '''Hi Welcome to Jenkins email alerts
-                        Thanks
-                        Hari''',
-                        subject: 'Jenkins Job',
-                        to: 'hari.kammana@gmail.com'
-                }
-            }
-        }
-
         stage('Slack Notification') {
             steps {
                 script {

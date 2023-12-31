@@ -54,11 +54,7 @@ pipeline {
                         '-Dsonar.host.url=http://localhost:9000',
                         '-Dsonar.login=sqp_06b333639bfbf6d6a2c63c40d97e56b115db04a7'
                     ].join(' ')
-
-                    // Run SonarQube analysis with updated properties
-                    withSonarQubeEnv('your-sonarqube-credentials-id') {
-                        bat "${mvnHome}/bin/mvn clean verify sonar:sonar ${sonarProperties}"
-                    }
+                    
                 }
             }
         }
