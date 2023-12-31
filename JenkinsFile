@@ -36,6 +36,18 @@ pipeline {
                 // Your deployment steps here
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // Define the Maven tool
+                    def mvnHome = tool name: 'maven-3', type: 'maven'
+                    // Run SonarQube analysis with correct credentials ID
+                    withSonarQubeEnv('sonar-6') {
+                        //nothing for now
+                    }
+                }
+            }
+        }
     }
     
     post {
