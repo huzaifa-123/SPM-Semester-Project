@@ -9,10 +9,6 @@ pipeline {
                 }
             }
         }
-    }
-
-    
-    stages {
         stage('Build') {
             steps {
                 echo 'Building...'
@@ -58,10 +54,6 @@ pipeline {
                 }
             }
         }
-
-
-        
-
         
         stage('Deploy') {
             steps {
