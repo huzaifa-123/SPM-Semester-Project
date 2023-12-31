@@ -1,14 +1,7 @@
 pipeline {
     agent any
+    
     stages {
-        stage('SCM Checkout') {
-            steps {
-                script {
-                    // Configure Git and use credentials
-                   git 'https://github.com/huzaifa-123/SPM-Semester-Project.git'
-                }
-            }
-        }
         stage('Build') {
             steps {
                 echo 'Building...'
@@ -34,24 +27,6 @@ pipeline {
             steps {
                 echo 'Running end-to-end tests...'
                 // Your end-to-end test command here
-            }
-        }
-        
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    // Define the Maven tool
-                    def mvnHome = tool name: 'maven-3', type: 'maven'
-                    
-                    // Replace the SonarQube properties with your actual values
-                    def sonarProperties = [
-                        '-Dsonar.projectKey=spmproject',
-                        '-Dsonar.projectName=spmproject',
-                        '-Dsonar.host.url=http://localhost:9000',
-                        '-Dsonar.login=sqp_06b333639bfbf6d6a2c63c40d97e56b115db04a7'
-                    ].join(' ')
-                    
-                }
             }
         }
         
