@@ -36,18 +36,13 @@ pipeline {
                 // Your deployment steps here
             }
         }
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    // Define the Maven tool
-                    def mvnHome = tool name: 'maven-3', type: 'maven'
-                    // Run SonarQube analysis with correct credentials ID
-                    withSonarQubeEnv('sonar-6') {
-                        //nothing for now
-                    }
-                }
+       
+        stage('SonarQube analysis') {
+            withSonarQubeEnv(credentialsId: 'sqp_68e9d489f3313c04e61e61c71d1fab018ba8ee53', installationName: 'sonarqube') { 
+            bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
             }
         }
+}
     }
     
     post {
