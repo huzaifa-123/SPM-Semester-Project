@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'windows'
-    }
+    agent any
     environment {
         // Set the PATH variable to include Maven
         PATH = "C:\\Users\\huzai\\.jenkins\\workspace\\ProjectCI\\apache-maven-3.9.6\\bin;$PATH"
@@ -49,7 +47,7 @@ pipeline {
                     def scannerHome = tool 'SonarScanner'
                     // Run SonarQube analysis
                     withSonarQubeEnv('SonarServer') {
-                        bat "${scannerHome}/bin/sonar-scanner"
+                        sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
             }
