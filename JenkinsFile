@@ -1,5 +1,8 @@
 pipeline {
     agent any
+        tools{
+            jdk 'jdk17'
+        }
     environment {
         // Set the PATH variable to include Maven
         PATH = "C:\\Users\\huzai\\.jenkins\\workspace\\ProjectCI\\apache-maven-3.9.6\\bin;$PATH"
