@@ -40,7 +40,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps{
                  withSonarQubeEnv(credentialsId: 'spm-token', installationName: 'sonarqube'){ 
-                    bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.5.0.3006:sonar'
+                    bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.0.1.3006:sonar'
                  }
             }
         }
