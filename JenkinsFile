@@ -38,10 +38,14 @@ pipeline {
         }
        
         stage('SonarQube analysis') {
-            withSonarQubeEnv(credentialsId: 'sqp_68e9d489f3313c04e61e61c71d1fab018ba8ee53', installationName: 'sonarqube') { 
-            bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+            steps{
+                 withSonarQubeEnv(credentialsId: 'sqp_68e9d489f3313c04e61e61c71d1fab018ba8ee53', installationName: 'sonarqube'){ 
+                    bat 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                 }
             }
         }
+                
+        
 
     }
     
